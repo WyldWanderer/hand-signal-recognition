@@ -9,10 +9,11 @@ Yes this will take some tinkering and custom coding but should provide the found
 
 ***How To Setup & Run***
 
-1. Copy this repo to your computer
-2. In the terminal, navigate to the folder for this repo
-3. run `pip install -r requirements.txt`
-4. Wait for all requirements to be installed (takes some time especially for the cv2 package)
-5. In the terminal, run `python main.py`
+1. If you don't have Python installed on your CPU, install it through https://www.python.org/downloads/
+2. Copy this repo to your computer
+3. In the terminal, navigate to the folder for this repo
+4. run `pip install -r requirements.txt`
+5. Wait for all requirements to be installed (takes some time especially for the cv2 package)
+6. In the terminal, run `python main.py`
 
 
