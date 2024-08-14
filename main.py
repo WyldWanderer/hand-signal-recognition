@@ -4,7 +4,7 @@ import os
 import mediapipe as mp
 import math
 
-
+gesture_dectected = False
 mp_hands = mp.solutions.hands
 hands = mp_hands.Hands()
 mp_draw = mp.solutions.drawing_utils
@@ -14,8 +14,47 @@ cap = cv2.VideoCapture(0)
 def calculate_distance(point1, point2):
   return math.sqrt((point1.x - point2.x)**2 + (point1.y - point2.y)**2)
 
-#def recognize_gesture(landmarks):
-    
+def recognize_gesture(landmarks):
+  global gesture_detected
+
+  palm_base = landmarks[0]
+  thumb_tip = landmarks[4]
+  index_tip = landmarks[8]
+  middle_tip = landmarks[12]
+  ring_tip = landmarks[16]
+  pinky_tip = landmarks[20]
+
+  thumb_index_distance = calculate_distance(thumb_tip, index_tip)
+  index_middle_distance = calculate_distance(index_tip, middle_tip)
+  middle_ring_distance = calculate_distance(middle_tip, ring_tip)
+  ring_pinky_distance = calculate_distance(ring_tip, pinky_tip)
+
+  if thumb_index_distance < 0.1 and index_middle_distance < 0.1 and middle_ring_distance < 0.1 and ring_pinky_distance < 0.1:
+    gesture = "Fist"
+  elif thumb_index_distance > 0.1 and index_middle_distance > 0.1 and middle_ring_distance > 0.1 and ring_pinky_distance > 0.1:
+    gesture =  "Open"
+  else:
+    gesture = "Unknown"
+
+  is_gesture_detected = False
+  if gesture != "Unknown":
+    is_gesture_detected = True
+    gesture_detected = gesture
+  elif gesture == "Unknown":
+    gesture_detected = False
+
+  return gesture, is_gesture_detected
+  
+def trigger_action(gesture, is_gesture_detected):
+  if not is_gesture_detected:
+     return
+  if gesture == "Fist":
+    print("Triggering action for Fist gesture")
+    os.system("open -a 'Google Chrome' https://www.google.com")
+  elif gesture == "Open":
+    print("Triggering action for Open gesture")
+  else:
+    print("Unknown gesture")
 
 while cap.isOpened():
     success, image = cap.read()
@@ -31,6 +70,8 @@ while cap.isOpened():
     if results.multi_hand_landmarks:
         for hand_landmarks in results.multi_hand_landmarks:
             mp_draw.draw_landmarks(image, hand_landmarks, mp_hands.HAND_CONNECTIONS)
+            gesture, is_gesture_detected = recognize_gesture(hand_landmarks.landmark)
+            trigger_action(gesture, is_gesture_detected)
     
     cv2.imshow('Hand Tracking', image)
 
