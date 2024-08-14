@@ -4,7 +4,7 @@ import os
 import mediapipe as mp
 import math
 
-gesture_dectected = False
+last_gesture_dectected = None
 mp_hands = mp.solutions.hands
 hands = mp_hands.Hands()
 mp_draw = mp.solutions.drawing_utils
@@ -15,7 +15,7 @@ def calculate_distance(point1, point2):
   return math.sqrt((point1.x - point2.x)**2 + (point1.y - point2.y)**2)
 
 def recognize_gesture(landmarks):
-  global gesture_detected
+  global last_gesture_dectected
 
   palm_base = landmarks[0]
   thumb_tip = landmarks[4]
@@ -36,14 +36,10 @@ def recognize_gesture(landmarks):
   else:
     gesture = "Unknown"
 
-  is_gesture_detected = False
-  if gesture != "Unknown":
-    is_gesture_detected = True
-    gesture_detected = gesture
-  elif gesture == "Unknown":
-    gesture_detected = False
+  is_new_gesture_detected = gesture != last_gesture_dectected 
+  last_gesture_dectected = gesture
 
-  return gesture, is_gesture_detected
+  return gesture, is_new_gesture_detected
   
 def trigger_action(gesture, is_gesture_detected):
   if not is_gesture_detected:
@@ -62,7 +58,6 @@ while cap.isOpened():
         print("Ignoring empty camera frame.")
         continue
     
-    
     image_rgb = cv2.cvtColor(cv2.flip(image, 1), cv2.COLOR_BGR2RGB)
 
     results = hands.process(image_rgb)
@@ -72,6 +67,8 @@ while cap.isOpened():
             mp_draw.draw_landmarks(image, hand_landmarks, mp_hands.HAND_CONNECTIONS)
             gesture, is_gesture_detected = recognize_gesture(hand_landmarks.landmark)
             trigger_action(gesture, is_gesture_detected)
+    else:
+        last_gesture_dectected = None
     
     cv2.imshow('Hand Tracking', image)
 
