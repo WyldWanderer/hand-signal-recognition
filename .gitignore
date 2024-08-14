@@ -33,6 +33,7 @@ nosetests.xml
 # IDEs
 .vscode/
 .idea/
+.env
 
 # OS generated files
 .DS_Store

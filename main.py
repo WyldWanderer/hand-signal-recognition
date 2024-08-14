@@ -4,6 +4,7 @@ import numpy as np
 import os
 import mediapipe as mp
 import math
+from integrations.slack_actions import SlackManager
 
 last_gesture_dectected = None
 mp_hands = mp.solutions.hands
@@ -11,6 +12,7 @@ hands = mp_hands.Hands()
 mp_draw = mp.solutions.drawing_utils
 
 cap = cv2.VideoCapture(0)
+slack = SlackManager()
 
 #Calculate the distance between two points on a hand based on the landmarks passed in
 def calculate_distance(point1, point2):
@@ -53,6 +55,7 @@ def trigger_action(gesture, is_gesture_detected):
     os.system("open -a 'Google Chrome' https://www.google.com")
   elif gesture == "Open":
     print("Triggering action for Open gesture")
+    slack.pause_notifications()
   else:
     print("Unknown gesture")
 
