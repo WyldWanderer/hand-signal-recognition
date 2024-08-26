@@ -14,3 +14,5 @@ class Actions:
         #slack.pause_notifications()
       case "Thumbs Up":
         print("YAY")
+      case "Pointing":
+        print("My finger points")

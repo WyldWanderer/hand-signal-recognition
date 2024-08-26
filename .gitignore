@@ -20,7 +20,7 @@ develop-eggs/
 .installed.cfg
 lib/
 lib64/
-hand_gesture_env/
+hand_gesturesV2/
 
 # Installer logs
 pip-log.txt

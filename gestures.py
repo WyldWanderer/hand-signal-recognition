@@ -28,14 +28,14 @@ class Gestures:
       ring_palm_distance = self.calculate_distance(ring_tip, palm_base)
       pinky_palm_distance = self.calculate_distance(pinky_tip, palm_base)
 
-      #Caluclate the distance between different hand landmarks to recognize the gesture
-      if thumb_index_distance < 0.1 and index_middle_distance < 0.1 and middle_ring_distance < 0.1 and ring_pinky_distance < 0.1:
+      #Calculate the distance between different hand landmarks to recognize the gesture
+      if thumb_palm_distance < 0.3 and index_palm_distance < 0.3 and middle_palm_distance < 0.3 and ring_palm_distance < 0.3 and pinky_palm_distance < 0.3:
         gesture = "Fist"
-      elif thumb_palm_distance < 0.1 and index_palm_distance < 0.1 and middle_palm_distance < 0.1 and ring_palm_distance < 0.1 and pinky_palm_distance < 0.1:
+      elif thumb_palm_distance > 0.3 and index_palm_distance > 0.5 and middle_palm_distance > 0.5 and ring_palm_distance > 0.5 and pinky_palm_distance > 0.5:
         gesture = "Open"
-      elif thumb_palm_distance > 0.1 and index_palm_distance < 0.1 and middle_palm_distance < 0.1 and ring_palm_distance < 0.1 and pinky_palm_distance < 0.1:
+      elif thumb_palm_distance > 0.3 and index_palm_distance < 0.3 and middle_palm_distance < 0.3 and ring_palm_distance < 0.3 and pinky_palm_distance < 0.3:
         gesture = "Thumbs Up"
-      elif thumb_palm_distance < 0.1 and index_palm_distance > 0.1 and middle_palm_distance < 0.1 and ring_palm_distance < 0.1 and pinky_palm_distance < 0.1:
+      elif thumb_palm_distance < 0.3 and index_palm_distance > 0.5 and middle_palm_distance < 0.3 and ring_palm_distance < 0.3 and pinky_palm_distance < 0.3:
         gesture = "Pointing"
       else:
         gesture = "Unknown"

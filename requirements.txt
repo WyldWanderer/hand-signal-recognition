@@ -8,7 +8,7 @@ importlib-resources==6.4.0
 kiwisolver==1.4.5
 load-dotenv==0.1.0
 matplotlib==3.9.1.post1
-mediapipe==0.9.1.0
+mediapipe==0.9.3.0
 numpy==2.0.1
 opencv-contrib-python==4.10.0.84
 opencv-python==4.10.0.84
