@@ -1,4 +1,9 @@
 import os
+from integrations.system_actions import SystemActions;
+from integrations.slack_actions import SlackManager
+
+system_actions = SystemActions()
+slack = SlackManager()
 
 class Actions:
   #Trigger an action based on the gesture recognized
@@ -11,8 +16,8 @@ class Actions:
         os.system("open -a 'Google Chrome' https://www.google.com")
       case "Open":
         print(f"Triggering action for {gesture} gesture")
-        #slack.pause_notifications()
+        system_actions.toggle_do_not_disturb()
       case "Thumbs Up":
-        print("YAY")
+        print(f"Triggering action for {gesture} gesture")
       case "Pointing":
         print("My finger points")

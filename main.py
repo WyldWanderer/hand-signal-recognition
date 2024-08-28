@@ -1,7 +1,6 @@
 #Necessary imports to run the code, 
 import cv2
 import mediapipe as mp
-from integrations.slack_actions import SlackManager
 from gestures import Gestures
 from actions import Actions
 
@@ -10,7 +9,6 @@ hands = mp_hands.Hands()
 mp_draw = mp.solutions.drawing_utils
 
 cap = cv2.VideoCapture(0)
-slack = SlackManager()
 gestures = Gestures()
 actions = Actions()
 
