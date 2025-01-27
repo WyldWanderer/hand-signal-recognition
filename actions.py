@@ -1,9 +1,11 @@
 import os
 from integrations.system_actions import SystemActions;
 from integrations.slack_actions import SlackManager
+from integrations.turret_controller import IRTurretController
 
 system_actions = SystemActions()
 slack = SlackManager()
+turret_controller = IRTurretController()
 
 class Actions:
   #Trigger an action based on the gesture recognized
@@ -20,4 +22,5 @@ class Actions:
       case "Thumbs Up":
         print(f"Triggering action for {gesture} gesture")
       case "Pointing":
-        print("My finger points")
+        turret_controller.send_command("ok")
+        print("Triggering fire command for turret")
